@@ -11,7 +11,8 @@ export const LoginForm = () => {
     }
 
     const validationSchema = Yup.object({
-        email: Yup.string().email('Invalid email format').required('Email is required')
+        email: Yup.string().email('Invalid email format').required('Email is required'),
+        password: Yup.string().required('Password is Required')
     })
 
     const onSubmit = (values) => {
@@ -20,18 +21,25 @@ export const LoginForm = () => {
 
     return (
         <>
-            <h2>Login</h2>
 
-            <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
-                {
-                    formik => (
-                        <Form>
-                            <FormControl control='input' type='email' name='email' label='Email' />
-                            <button type='submit'>Submit</button>
-                        </Form>
-                    )
-                }
-            </Formik>
+            <div>
+                <div className="d-block">
+                    <h2>Login</h2>
+                </div>
+
+                <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
+                    {
+                        formik => (
+                            <Form>
+                                <FormControl control='input' type='email' name='email' label='Email' />
+                                <FormControl control='input' type='password' name='password' label='Password' />
+                                <button type='submit' disabled={!formik.isValid}>Submit</button>
+                            </Form>
+                        )
+                    }
+                </Formik>
+
+            </div>
         </>
     )
 }
