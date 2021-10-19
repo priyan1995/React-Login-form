@@ -7,12 +7,15 @@ export const Register = () => {
 
     const initialValues = {
         email: '',
-        password: ''
+        password: '',
+        confirmPassword: ''
     }
 
     const validationSchema = Yup.object({
         email: Yup.string().email('Invalid email format').required('Email is required'),
-        password: Yup.string().required('Password is Required')
+        password: Yup.string().required('Password is Required'),
+        confirmPassword: Yup.string().oneOf([Yup.ref('password'), ''], 'Password Should Matched').required('Confirm the password')
+
     })   
 
     const onSubmit = (values) => {
@@ -41,6 +44,14 @@ export const Register = () => {
                                 type='password'
                                 label='Password'
                                 name='password'
+                                />
+
+
+                                <FormControl 
+                                control='input'
+                                type='password'
+                                label='Confirm Password'
+                                name='confirmPassword'
                                 />
 
                                 <button type='submit'>Submit</button>
