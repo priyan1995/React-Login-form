@@ -9,7 +9,8 @@ export const Register = () => {
         email: '',
         password: '',
         confirmPassword: '',
-        modeOfContact: ''
+        modeOfContact: '',
+        phone: ''
     }
 
     const modesOfCont = [
@@ -21,7 +22,12 @@ export const Register = () => {
     const validationSchema = Yup.object({
         email: Yup.string().email('Invalid email format').required('Email is required'),
         password: Yup.string().required('Password is Required'),
-        confirmPassword: Yup.string().oneOf([Yup.ref('password'), ''], 'Password Should Matched').required('Confirm the password')
+        confirmPassword: Yup.string().oneOf([Yup.ref('password'), ''], 'Password Should Matched').required('Confirm the password'),
+        modeOfContact: Yup.string().required('Required'),
+        phone: Yup.string().when('modeOfContact', {
+            is: 'telephoneype',
+            then: Yup.string().required('Please add phone number')
+        })
 
     })
 
@@ -68,7 +74,14 @@ export const Register = () => {
                                     options={modesOfCont}
                                 />
 
-                                <button type='submit'>Submit</button>
+                                <FormControl 
+                                control='input'
+                                type='text'
+                                label='Phone'
+                                name='phone'
+                                />
+
+                                <button type='submit' disabled={!formik.isValid}>Submit</button>
                             </Form>
                         )
                     }
